@@ -1,0 +1,2 @@
+# ViconiaFriendship
+This mod adds a series of dialogues for a female PC or a male PC who has turned Viconia down, and attempts to give someone who isn't interested in a romantic relationship something to bite into. But bear in mind that Viconia is not an easy person to talk to, let alone befriend. She has a mind of her own, and although she is willing to travel with you, she may not wish to become your confidante.
