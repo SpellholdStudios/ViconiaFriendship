@@ -5,6 +5,7 @@
 @4    = ~Avec les événements de la mort d'Amélyssane derrière elle, Viconia prit sa part du butin de ses aventures avec <CHARNAME> et se rendit à Eau-Profonde, où elle s'établit, elle et ses opérations, pour les années à venir. Bien que personne ne sache réellement jusqu'où s'étendait son influence, ou quel était le mode de fonctionnement réel de son groupe, on tient pour sûr que presque tous ses suivants étaient des fidèles de Shar et qu'ils avaient la main dans presque toutes les opérations politiques ou religieuses de la Côte des Épées. Certains prétendent que le plan ultime de Viconia était de prendre d'assaut l'Ombreterre, d'autres qu'elle cherchait seulement le pouvoir. Ce qui leur arriva au final à elle et à son groupe demeure incertain, et la façon exacte dont ils ont influencé les Royaumes est voilé de mystère... un peu à la façon de la sombre drow elle-même.~
 @5    = ~Viconia Friendship est compatible uniquement avec les installations BG II - ToB, BGT et BG2EE.~
 
+
 // WeiDU prompts
 @-1000= "Le mod %TP2_FILE_NAME% contient"
 @-1001= "composants optionnels distincts.
