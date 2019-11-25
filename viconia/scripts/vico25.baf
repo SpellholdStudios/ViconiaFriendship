@@ -1,0 +1,257 @@
+// --------------------------------------
+// Viconia Friendship
+// --------------------------------------
+
+// Setting various variables
+IF 
+    InParty(Myself)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    Global("I#ViconiaToBTalks","GLOBAL",0)
+    !Global("I#ViconiaToBStart","GLOBAL",1)
+THEN
+  RESPONSE #100
+    RealSetGlobalTimer("I#ViconiaToBTimer","GLOBAL",1800)
+    SetGlobal("I#ViconiaToBStart","GLOBAL",1)
+	Continue()
+END
+
+IF
+    InParty(Myself)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    Global("I#ViconiaToBStart","GLOBAL",1)
+    RealGlobalTimerExpired("I#ViconiaToBTimer","GLOBAL")
+	Global("I#ViconiaToBTalks","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("I#ViconiaToBTalks","GLOBAL",1)
+	Continue()
+END
+
+
+// Friend talks, sequential
+IF
+    RealGlobalTimerExpired("I#ViconiaToBTimer","GLOBAL")
+    InParty(Myself)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    !AreaType(DUNGEON)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaToBTalks","GLOBAL",2)
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#ViconiaToBTalks","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("I#ViconiaToBTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID) 
+    CombatCounter(0)
+    !See([ENEMY])
+    OR(2)
+      Global("I#ViconiaToBTalks","GLOBAL",1)
+      Global("I#ViconiaToBTalks","GLOBAL",3)
+THEN
+  RESPONSE #100
+    MoveToObject(Player1)
+    StartDialogueNoSet(Player1)
+END
+
+
+// Talk #3: betrayal and trust
+IF
+    InParty(Myself)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    OR(2)
+      Dead("Balth")
+      Global("BalthazarFights","GLOBAL",1)
+    Global("I#ViconiaToB_balth","GLOBAL",0)
+THEN
+  RESPONSE #100
+    RealSetGlobalTimer("I#ViconiaToBTimer","GLOBAL",120)
+    SetGlobal("I#ViconiaToB_balth","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("I#ViconiaToBTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID) 
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaToB_balth","GLOBAL",1)
+    Global("I#ViconiaToBTalks","GLOBAL",4)
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#ViconiaToBTalks","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("I#ViconiaToBTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID) 
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaToBTalks","GLOBAL",5)
+THEN
+  RESPONSE #100
+    MoveToObject(Player1)
+    StartDialogueNoSet(Player1)
+END
+
+
+
+// Talk #4: End of days
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("ChallengesDone","GLOBAL",1)
+    Global("I#ViconiaToB_end","GLOBAL",0)
+THEN
+  RESPONSE #100
+    RealSetGlobalTimer("I#ViconiaToBTimer","GLOBAL",50)
+    SetGlobal("I#ViconiaToB_end","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("I#ViconiaToBTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID) 
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaToB_end","GLOBAL",1)
+    Global("I#ViconiaToBTalks","GLOBAL",6)
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#ViconiaToBTalks","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("I#ViconiaToBTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID) 
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaToBTalks","GLOBAL",7)
+THEN
+  RESPONSE #100
+    MoveToObject(Player1)
+    StartDialogueNoSet(Player1)
+END
+
+
+// Saradush scenery talk
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    AreaCheck("AR5000")
+    Global("I#ViconiaToB_SaradushCheck","GLOBAL",0)
+THEN
+  RESPONSE #100
+    RealSetGlobalTimer("I#ViconiaToB_SaradushTimer","GLOBAL",600)
+    SetGlobal("I#ViconiaToB_SaradushCheck","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("I#ViconiaToB_SaradushTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    AreaCheck("AR5000")
+    Global("I#ViconiaToB_SaradushCheck","GLOBAL",1)
+    Global("I#ViconiaToB_Saradush","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("I#ViconiaToB_Saradush","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("I#ViconiaToB_SaradushTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID) 
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaToB_Saradush","GLOBAL",1)
+THEN
+  RESPONSE #100
+    MoveToObject(Player1)
+    StartDialogueNoSet(Player1)
+END
+
+
+// Sendai scenery talk; after her death
+IF
+    InParty(Myself)
+    !AreaType(DUNGEON)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Dead("Sendai")
+    Global("I#ViconiaToB_SendaiCheck","GLOBAL",0)
+THEN
+  RESPONSE #100
+    RealSetGlobalTimer("I#ViconiaToB_SendaiTimer","GLOBAL",120)
+    SetGlobal("I#ViconiaToB_SendaiCheck","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("I#ViconiaToB_SendaiTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID) 
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaToB_SendaiCheck","GLOBAL",1)
+    Global("I#ViconiaToB_Sendai","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("I#ViconiaToB_Sendai","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("I#ViconiaToB_SendaiTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID) 
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaToB_Sendai","GLOBAL",1)
+THEN
+  RESPONSE #100
+    MoveToObject(Player1)
+    StartDialogueNoSet(Player1)
+END

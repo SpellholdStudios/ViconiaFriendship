@@ -1,0 +1,61 @@
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("Viconia")
+    Global("PlayerChoseEssence","GLOBAL",1)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    Global("I#ViconiaToB_Enslaves","GLOBAL",1)
+    Gender(Player1,MALE)
+    Global("ViconiaBio","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("ViconiaBio","GLOBAL",1)
+    TextScreen("I#VIC1")
+    SmallWait(1)
+    Continue()
+END
+
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("Viconia")
+    Global("PlayerChoseEssence","GLOBAL",1)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    Global("I#ViconiaToB_Enslaves","GLOBAL",1)
+    Gender(Player1,FEMALE)
+    Global("ViconiaBio","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("ViconiaBio","GLOBAL",1)
+    TextScreen("I#VIC2")
+    SmallWait(1)
+    Continue()
+END
+
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("Viconia")
+    Global("PlayerChoseEssence","GLOBAL",0)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    Global("I#ViconiaToB_Enslaves","GLOBAL",0)
+    Global("ViconiaBio","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("ViconiaBio","GLOBAL",1)
+    TextScreen("I#VIC3")
+    SmallWait(1)
+    Continue()
+END
+
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("Viconia")
+    Global("PlayerChoseEssence","GLOBAL",1)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    Global("I#ViconiaToB_Enslaves","GLOBAL",0)
+    Global("ViconiaBio","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("ViconiaBio","GLOBAL",1)
+    TextScreen("I#VIC4")
+    SmallWait(1)
+    Continue()
+END

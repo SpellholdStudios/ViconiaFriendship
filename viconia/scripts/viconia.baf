@@ -1,0 +1,638 @@
+// --------------------------------------
+// Viconia Friendship
+// --------------------------------------
+
+// Setting various variables
+IF      
+    %BGT_VAR%
+    InParty(Myself)
+    Global("I#ViconiaFriendshipCheck","GLOBAL",0)
+    OR(2)
+      Race(Player1,ELF)
+      Gender(Player1,FEMALE)
+THEN
+  RESPONSE #100
+    SetGlobal("I#ViconiaFriendshipCheck","GLOBAL",1)
+    SetGlobal("I#ViconiaFriendship","GLOBAL",1)
+    RealSetGlobalTimer("I#ViconiaTrustTimer","GLOBAL",900)
+    SetGlobal("I#ViconiaTrustStart","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    Global("I#ViconiaFriendshipCheck","GLOBAL",0)
+    Global("ViconiaRomanceActive","GLOBAL",3)
+    GlobalLT("LoveTalk","LOCALS",28)
+THEN
+  RESPONSE #100
+    SetGlobal("I#ViconiaFriendshipCheck","GLOBAL",1)
+    SetGlobal("I#ViconiaFriendship","GLOBAL",1)
+    RealSetGlobalTimer("I#ViconiaBreakupTimer","GLOBAL",7200)
+    SetGlobal("I#ViconiaBreakupStart","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    Global("I#ViconiaFriendshipCheck","GLOBAL",0)
+    Global("ViconiaRomanceActive","GLOBAL",3)
+    GlobalGT("LoveTalk","LOCALS",27)
+THEN
+  RESPONSE #100
+    SetGlobal("I#ViconiaFriendshipCheck","GLOBAL",1)
+    SetGlobal("I#ViconiaFriendship","GLOBAL",3)
+END
+
+
+// Suspicion talks
+IF
+    %BGT_VAR%
+    InParty(Myself)
+    Global("I#ViconiaTrustStart","GLOBAL",1)
+    Global("I#ViconiaFriendship","GLOBAL",1)
+    Global("I#ViconiaTrustTalks","GLOBAL",0)
+    RealGlobalTimerExpired("I#ViconiaTrustTimer","GLOBAL")
+THEN
+  RESPONSE #100
+    SetGlobal("I#ViconiaTrustTalks","GLOBAL",1)
+END
+
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaTrustTimer","GLOBAL")
+    InParty(Myself)
+    Global("I#ViconiaFriendship","GLOBAL",1)
+    !AreaType(DUNGEON)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaTrustTalks","GLOBAL",2)
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#ViconiaTrustTalks","GLOBAL",1)
+END
+
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaTrustTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    OR(3)
+      Global("I#ViconiaTrustTalks","GLOBAL",1)
+      Global("I#ViconiaTrustTalks","GLOBAL",3)
+      Global("I#ViconiaTrustTalks","GLOBAL",5)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+END
+
+// Only do talk #3 if Viconia is interested
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaTrustTimer","GLOBAL")
+    Global("I#ViconiaTrustTalks","GLOBAL",4)
+    Global("I#ViconiaFriendship","GLOBAL",1)
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    GlobalGT("I#ViconiaTrustsPC","GLOBAL",2)
+    Global("I#ViconiaTrustCheck","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("I#ViconiaFriendship","GLOBAL",2)
+    SetGlobal("I#ViconiaTrustCheck","GLOBAL",1)
+    SetGlobal("I#ViconiaFriendshipStart","GLOBAL",1)
+    RealSetGlobalTimer("I#ViconiaFriendTimer","GLOBAL",3600)
+END
+
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaTrustTimer","GLOBAL")
+    Global("I#ViconiaTrustTalks","GLOBAL",4)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    GlobalGT("I#ViconiaTrustsPC","GLOBAL",2)
+    Global("I#ViconiaTrustCheck","GLOBAL",1)
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#ViconiaTrustTalks","GLOBAL",1)
+END
+
+IF
+    %BGT_VAR%
+    Global("I#ViconiaTrustTalks","GLOBAL",4)
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    GlobalLT("I#ViconiaTrustsPC","GLOBAL",3)
+    Global("I#ViconiaTrustCheck","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("I#ViconiaFriendship","GLOBAL",3)
+    SetGlobal("I#ViconiaTrustCheck","GLOBAL",1)
+    SetGlobal("I#ViconiaTrustTalks","GLOBAL",6)
+END
+
+
+// Trust talks, post-relationship
+IF
+    %BGT_VAR%
+    InParty(Myself)
+    Global("I#ViconiaBreakupStart","GLOBAL",1)
+    Global("I#ViconiaFriendship","GLOBAL",1)
+    Global("I#ViconiaBreakupTalks","GLOBAL",0)
+    RealGlobalTimerExpired("I#ViconiaBreakupTimer","GLOBAL")
+THEN
+  RESPONSE #100
+    SetGlobal("I#ViconiaBreakupTalks","GLOBAL",1)
+END
+
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaBreakupTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    Global("I#ViconiaFriendship","GLOBAL",1)
+    !AreaType(DUNGEON)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaBreakupTalks","GLOBAL",2)
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#ViconiaBreakupTalks","GLOBAL",1)
+END
+
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaBreakupTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    OR(2)
+      Global("I#ViconiaBreakupTalks","GLOBAL",1)
+      Global("I#ViconiaBreakupTalks","GLOBAL",3)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+END
+
+IF
+    %BGT_VAR%
+    InParty(Myself)
+    Global("I#ViconiaFriendship","GLOBAL",1)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaBreakupTalks","GLOBAL",4)
+THEN
+  RESPONSE #100
+    SetGlobal("I#ViconiaFriendship","GLOBAL",2)
+    SetGlobal("I#ViconiaFriendshipStart","GLOBAL",1)
+    RealSetGlobalTimer("I#ViconiaFriendTimer","GLOBAL",3600)
+END
+
+
+// Friend talks, sequential
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaFriendTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaFriendshipStart","GLOBAL",1)
+THEN
+  RESPONSE #100
+    SetGlobal("I#ViconiaFriendshipStart","GLOBAL",2)
+    SetGlobal("I#ViconiaFriendTalks","GLOBAL",1)
+END
+
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaFriendTimer","GLOBAL")
+    InParty(Myself)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    !AreaType(DUNGEON)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    OR(5)
+      Global("I#ViconiaFriendTalks","GLOBAL",2)
+      Global("I#ViconiaFriendTalks","GLOBAL",6)
+      Global("I#ViconiaFriendTalks","GLOBAL",8)
+      Global("I#ViconiaFriendTalks","GLOBAL",12)
+      Global("I#ViconiaFriendTalks","GLOBAL",14)
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#ViconiaFriendTalks","GLOBAL",1)
+END
+
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaFriendTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID) 
+    CombatCounter(0)
+    !See([ENEMY])
+    OR(6)
+      Global("I#ViconiaFriendTalks","GLOBAL",1)
+      Global("I#ViconiaFriendTalks","GLOBAL",3)
+      Global("I#ViconiaFriendTalks","GLOBAL",7)
+      Global("I#ViconiaFriendTalks","GLOBAL",9)
+      Global("I#ViconiaFriendTalks","GLOBAL",13)
+      Global("I#ViconiaFriendTalks","GLOBAL",15)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+END
+
+// Friendship #3: must occur in city
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaFriendTimer","GLOBAL")
+    InParty(Myself)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    AreaType(CITY)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaFriendTalks","GLOBAL",4)
+
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#ViconiaFriendTalks","GLOBAL",1)
+END
+
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaFriendTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID) 
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaFriendTalks","GLOBAL",5)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+END
+
+
+// Lolth dialogues
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaFriendTimer","GLOBAL")
+    Global("I#ViconiaFriendTalks","GLOBAL",16)
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("I#ViconiaLolthCheck","GLOBAL",0)
+THEN 
+  RESPONSE #100
+    SetGlobal("I#ViconiaLolthCheck","GLOBAL",1)
+    RealSetGlobalTimer("I#ViconiaLolthTimer","GLOBAL",3600)
+END
+
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaLolthTimer","GLOBAL")
+    Global("I#ViconiaFriendTalks","GLOBAL",16)
+    Global("I#ViconiaLolthCheck","GLOBAL",1)
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("I#ViconiaLolthTalks","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("I#ViconiaLolthTalks","GLOBAL",1)
+END
+
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaLolthTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaLolthTalks","GLOBAL",1)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+END
+
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaLolthTimer","GLOBAL")
+    InParty(Myself)
+    !AreaType(DUNGEON)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaLolthTalks","GLOBAL",2)
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#ViconiaLolthTalks","GLOBAL",1)
+END
+
+IF
+    %BGT_VAR%
+    RealGlobalTimerExpired("I#ViconiaLolthTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaLolthTalks","GLOBAL",3)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+END
+
+IF
+    OR(2)
+      !Dead("i#vyoch")
+      !Dead("i#vhand") // Handmaiden of Lolth
+    OR(2)
+      See("i#vyoch")
+      See("i#vhand")
+THEN
+  RESPONSE #100
+    PlayDead(100)
+END
+
+IF
+    InParty(Myself)
+    Dead("i#vyoch")
+    Dead("i#vhand") // Handmaiden of Lolth
+    Global("I#ViconiaLolthTalks","GLOBAL",4)
+    CombatCounter(0)
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#ViconiaLolthTalks","GLOBAL",1)
+END
+
+IF
+    %BGT_VAR%
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaLolthTalks","GLOBAL",5)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+END
+
+
+// Final friendtalk
+IF
+    %BGT_VAR%
+    AreaCheck("AR2900")
+    InParty(Myself)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("I#ViconiaFriendTalks","GLOBAL",16)
+    Global("I#ViconiaHellCheck","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("I#ViconiaHellCheck","GLOBAL",1)
+    RealSetGlobalTimer("I#ViconiaHellTimer","GLOBAL",100)
+END
+
+IF
+    RealGlobalTimerExpired("I#ViconiaHellTimer","GLOBAL")
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("I#ViconiaHellCheck","GLOBAL",1)
+    Global("I#ViconiaFriendTalks","GLOBAL",16)
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#ViconiaFriendTalks","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("I#ViconiaHellTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("I#ViconiaFriendTalks","GLOBAL",17)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+END
+
+
+// Of Marriage and Husbands!
+IF
+    %BGT_VAR%
+    InParty(Myself)
+    OR(2)
+      Global("I#ViconiaFriendship","GLOBAL",2)
+      Global("I#ViconiaFriendship","GLOBAL",1)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TalkedToRumar","GLOBAL",1)
+    Global("TalkedToPriss","GLOBAL",1)
+    Global("I#ViconiaMarriageCheck","GLOBAL",0)
+THEN
+  RESPONSE #100
+    RealSetGlobalTimer("I#Viconia_MarriageTimer","GLOBAL",60)
+    SetGlobal("I#ViconiaMarriageCheck","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("I#Viconia_MarriageTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("I#ViconiaMarriageCheck","GLOBAL",1)
+    Global("I#Viconia_Marriage","GLOBAL",0)
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#Viconia_Marriage","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("I#Viconia_MarriageTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("I#Viconia_Marriage","GLOBAL",1)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+END
+
+// DeVir scenery dialogue
+IF
+    %BGT_VAR%
+    AreaCheck("AR2203")
+    InParty(Myself)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    See("UDDROW13")
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("I#Viconia_UD_DeVir","GLOBAL",0)
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#Viconia_UD_DeVir","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("I#Viconia_UD_DeVir","GLOBAL",1)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+END
+
+
+// Underdark scenery dialogue
+IF
+    %BGT_VAR%
+    OR(4)
+      AreaCheck("AR2200")
+      AreaCheck("AR2201")
+      AreaCheck("AR2202")
+      AreaCheck("AR2203")
+    InParty(Myself)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaUnderdark","GLOBAL",0)
+    Global("I#ViconiaUnderdarkCheck","GLOBAL",0)
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#ViconiaUnderdarkCheck","GLOBAL",1)
+    RealSetGlobalTimer("I#ViconiaUnderdarkTimer","GLOBAL",900)
+END
+
+IF
+    RealGlobalTimerExpired("I#ViconiaUnderdarkTimer","GLOBAL")
+    OR(4)
+      AreaCheck("AR2200")
+      AreaCheck("AR2201")
+      AreaCheck("AR2202")
+      AreaCheck("AR2203")
+    InParty(Myself)
+    See(Player1)
+    Global("I#ViconiaUnderdarkCheck","GLOBAL",1)
+    Global("I#ViconiaUnderdark","GLOBAL",0)
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#ViconiaUnderdark","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("I#ViconiaUnderdarkTimer","GLOBAL")
+    OR(4)
+      AreaCheck("AR2200")
+      AreaCheck("AR2201")
+      AreaCheck("AR2202")
+      AreaCheck("AR2203")
+    InParty(Myself)
+    See(Player1)
+    CombatCounter(0)
+    Global("I#ViconiaUnderdark","GLOBAL",1)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+END
+
+
+// Elhan scenery dialogue
+IF
+    %BGT_VAR%
+    AreaCheck("AR2500")
+    See("c6elhan")
+    InParty(Myself)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("I#ViconiaElhan","GLOBAL",0)
+    Global("I#ViconiaElhanCheck","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("I#ViconiaElhanCheck","GLOBAL",1)
+    RealSetGlobalTimer("I#ViconiaElhanTimer","GLOBAL",50)
+END
+
+IF
+    RealGlobalTimerExpired("I#ViconiaElhanTimer","GLOBAL")
+    InParty(Myself)
+    Global("I#ViconiaFriendship","GLOBAL",2)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("I#ViconiaElhanCheck","GLOBAL",1)
+    Global("I#ViconiaElhan","GLOBAL",0)
+THEN
+  RESPONSE #100
+    IncrementGlobal("I#ViconiaElhan","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("I#ViconiaElhanTimer","GLOBAL")
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID) 
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("I#ViconiaElhan","GLOBAL",1)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+END
