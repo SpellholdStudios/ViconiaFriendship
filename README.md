@@ -12,7 +12,7 @@ Baldur's Gate Trilogy and EET<h3>
 
 **Authors:** K'aeloree  
 **Mod Website:** <a href="http://www.spellholdstudios.net/ie/npciep">Spellhold Studios</a>  
-**Mod Forum:** <a href="http://www.shsforums.net/index.php?showforum=555">Viconia Friendship</a><br /><br />
+**Mod Forum:** <a href="http://www.shsforums.net/forum/555-viconia-friendship/">Viconia Friendship</a><br /><br />
 
 
 <div align="center">
@@ -32,7 +32,7 @@ This mod adds a series of dialogues for a female PC or a male PC who has turned 
 I hope you enjoy the mod as much as I have writing it! - K'aeloree
 
 
-Visit the <a href="http://www.spellholdstudios.net/ie/viconia">website</a> or <a href="http://www.shsforums.net/index.php?showforum=555">forum</a> for all the latest updates.
+Visit the <a href="http://www.spellholdstudios.net/ie/viconia">website</a> or <a href="http://www.shsforums.net/forum/555-viconia-friendship/">forum</a> for all the latest updates.
 
 
 <hr>
@@ -42,7 +42,7 @@ Visit the <a href="http://www.spellholdstudios.net/ie/viconia">website</a> or <a
 
 This mod is designed to work on the following Infinity Engine games: the original Baldur's Gate II (BG2 or just SoA) with the Throne of Bhaal (ToB) expansion, Baldur's Gate II: Enhanced Edition (BG2EE), the conversion projects Baldur's Gate Trilogy (BGT) and Enhanced Edition Trilogy (EET).
 
-The Viconia Friendship mod should be compatible with all WeiDU mods, however, we cannot test every single one. It is only compatible with BGII: ToB. If you do encounter an error, please contact <a href="kae@spellholdstudios.net">K'aeloree</a> or alternatively post on the <a href="http://www.shsforums.net/index.php?showforum=555">forums</a>..
+The Viconia Friendship mod should be compatible with all WeiDU mods, however, we cannot test every single one. It is only compatible with BGII: ToB. If you do encounter an error, please contact <a href="kae@spellholdstudios.net">K'aeloree</a> or alternatively post on the <a href="http://www.shsforums.net/forum/555-viconia-friendship/">forums</a>..
 
 >Although it is not required for the Viconia Friendship to function properly, it is always a good idea to install the latest version of the <a href="http://www.gibberlings3.net/bg2fixpack/">BG2 Fixpack</a>.
 <div align="right"><a href="#top">Back to top</a></div>
@@ -75,6 +75,12 @@ Extract the contents of the mod archive into the folder of the game you wish to 
 
 Run **`setup-viconia.exe`** in your game folder to reinstall, un-install or otherwise change the component settings.
 
+#### Mac OS X
+
+Viconia Friendship for Mac OS X is distributed as a compressed zip archive and includes a WeiDU installer. Simply unpack the mod package into your Baldur's Gate II directory and run **`setup-viconia.command`**.
+
+To un-install, run **`setup-viconia.command`** again and select the un-install option.
+
 ## 
 
 #### Note for Complete Un-installation
@@ -89,7 +95,7 @@ In addition to the methods above for removing individual components, you can com
 ## <a name="faq" id="faq"></a>Frequently Asked Questions
 
 **Q: Is the Viconia Friendship compatible with XYZ mod?**  
-A: It most certainly should be, but we have not tested it with every single mod available. If you do encounter an error, please contact <a href="kae@spellholdstudios.net">K'aeloree</a> or alternatively post on the <a href="http://www.shsforums.net">forums</a>.
+A: It most certainly should be, but we have not tested it with every single mod available. If you do encounter an error, please contact <a href="kae@spellholdstudios.net">K'aeloree</a> or alternatively post on the <a href="http://www.shsforums.net/forum/555-viconia-friendship/">forums</a>.
 
 **Q: I have a female PC. When will the friendship start?**  
 A: It should begin around 15 minutes after Viconia joins your party.
@@ -107,7 +113,7 @@ A: This would be because Viconia most probably doesn't like you. She can be rath
 A: Either you have been so rude to her that she has made the decision to ignore you, or you are at one of several talks requiring certain conditions to occur. Talk 6/7 occurs in the city, talk 9 occurs at rest and the last friendtalk occurs in Hell.
 
 **Q: This mod isn't in character at *all*.**  
-A: We're always looking for ways to improve the characterisation in this mod, so please post any suggestions or criticism to <a href="kae@spellholdstudios.net">me</a> or post on the <a href="http://www.shsforums.net">forums</a>.
+A: We're always looking for ways to improve the characterisation in this mod, so please post any suggestions or criticism to <a href="kae@spellholdstudios.net">me</a> or post on the <a href="http://www.shsforums.net/forum/555-viconia-friendship/">forums</a>.
 
 **Q: Have you got any plans to expand the mod by adding more dialogues in future?**  
 A: I sure do--if you have any suggestions for dialogue you would like to see in the mod, please post it on the forum--I'd be happy to take a look at it!
@@ -175,8 +181,9 @@ A: ... no. :laughing:
 ##### Version 4.4 (November 24, 2019)
 
 - Added *viconia.ini* metadata file to support AL|EN's "Project Infinity".
-- tp2 file: added credits for translations. Replaced "Handmaiden of Lolth" with #52922 and "Yochlol" with #2152 to avoid installing cre files with English names.
+- tp2 file: added credits for translations. Replaced "*Handmaiden of Lolth*" with #52922 and "*Yochlol*" with #2152 to avoid installing cre files with English names.
 - README command now accepts translated files.
+- Component: added *DESIGNATED* number and "*viconia_friendship*" LABEL.
 - Updated deprecated modding tools links.
 - Lower cased files.
 - Updated and renamed readme files to *viconiafriendship-readme-%LANGUAGE%.html*.
