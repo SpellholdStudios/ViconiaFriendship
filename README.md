@@ -1,4 +1,4 @@
-![Latest Release](https://img.shields.io/github/v/release/SpellholdStudios/ViconiaFriendship?include_prereleases&color=darkred)<a name="top" id="top">
+![Latest Release](https://img.shields.io/github/v/release/SpellholdStudios/ViconiaFriendship?include_prereleases&color=darkred)<a name="top" id="top"> </a>
 ![Platform](https://img.shields.io/static/v1?label=platform&message=windows%20%7C%20macos%20%7C%20linux&color=informational)
 ![Language](https://img.shields.io/static/v1?label=language&message=English%20%7C%20French%20%7C%20Russian%20%7C%20Chinese&color=limegreen)
 
@@ -177,6 +177,15 @@ A: ... no. :laughing:
 
 
 ## <a name="versions" id="versions"></a>Versions History
+
+##### Version 4.5 (December 14, 2019)
+
+- Fixed an issue with *Auto-Package Generator tool*: new version of MacOS (Catalina) prevented the mod to be installed.
+- Renamed *setup-viconia.tp2* -> *viconia.tp2* to support AL|EN's "Project Infinity".
+- Replaced AUTHOR keyword with SUPPORT.
+- Fixed wrong SHS links in readmes and metadata files.
+
+## 
 
 ##### Version 4.4 (November 24, 2019)
 
