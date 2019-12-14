@@ -8,10 +8,11 @@
 BACKUP ~viconia/backup~
 
 // Error reports sent to K'aeloree
-AUTHOR ~kae@spellholdstudios.net~
+//AUTHOR ~kae@spellholdstudios.net~
+SUPPORT ~http://www.shsforums.net/forum/555-viconia-friendship/~
 
 // Version
-VERSION ~v4.4~
+VERSION ~v4.5~
 
 // Readme
 README ~viconia/viconiafriendship-readme-%LANGUAGE%.html~ ~viconia/viconiafriendship-readme-english.html~
